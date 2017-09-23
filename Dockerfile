@@ -1,5 +1,6 @@
-FROM docker.io/alpine:3.3
-MAINTAINER Raul Sanchez <rawmind@gmail.com>
+FROM docker.io/alpine:3.6
+MAINTAINER Claudio Souza <jcfigueiredo@gmail.com>
+# base on Raul Sanchez <rawmind@gmail.com>
 
 # Install basic packages and config monit
 RUN apk add --update bash monit openssl openssh curl && rm -rf /var/cacke/apk/* \
@@ -9,10 +10,10 @@ RUN chown root:root /etc/monitrc && chmod 700 /etc/monitrc
 COPY monit/basic /etc/monit/conf.d/basic
 
 # Install compile and install confd
-ENV CONFD_VERSION=v0.11.0 GOMAXPROCS=2 \
+ENV CONFD_VERSION=v0.13.0 GOMAXPROCS=2 \
     GOROOT=/usr/lib/go \
     GOPATH=/opt/src \
-    GOBIN=/gopath/bin 
+    GOBIN=/gopath/bin
 
 RUN apk add --update go git gcc musl-dev \
   && mkdir -p /opt/src; cd /opt/src \
