@@ -19,6 +19,9 @@ ENV CONFD_VERSION=v0.13.0 GOMAXPROCS=2 \
 RUN mkdir -p /opt/confd/bin && mkdir -p /etc/confd/templates /etc/confd/conf.d
 COPY ./bin/confd-0.13.0-linux-amd64 /opt/confd/bin/confd
 
+# adding support to confd
+# http://www.mricho.com/confd-and-docker-separating-config-and-code-for-containers/
+
 # Install selfsigned ca (optional)
 #COPY <ca.crt> /etc/ssl/certs/<ca.pem>
 #RUN cat /etc/ssl/certs/<ca.pem> >> /etc/ssl/certs/ca-certificates.crt && \
