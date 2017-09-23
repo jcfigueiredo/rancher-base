@@ -13,18 +13,11 @@ COPY monit/basic /etc/monit/conf.d/basic
 ENV CONFD_VERSION=v0.13.0 GOMAXPROCS=2 \
     GOROOT=/usr/lib/go \
     GOPATH=/opt/src \
-    GOBIN=/gopath/bin
+    GOBIN=/gopath/bin \
+    PATH="$PATH:/opt/confd/bin"
 
-RUN apk add --update go git gcc musl-dev \
-  && mkdir -p /opt/src; cd /opt/src \
-  && git clone -b "$CONFD_VERSION" https://github.com/kelseyhightower/confd.git \
-  && cd $GOPATH/confd/src/github.com/kelseyhightower/confd \
-  && GOPATH=$GOPATH/confd/vendor:$GOPATH/confd CGO_ENABLED=0 go build -v -installsuffix cgo -ldflags '-extld ld -extldflags -static' -a -x . \
-  && mv ./confd /usr/bin/ \
-  && chmod +x /usr/bin/confd \
-  && apk del go git gcc musl-dev \
-  && rm -rf /var/cache/apk/* /opt/src \
-  && mkdir -p /etc/confd/templates /etc/confd/conf.d
+RUN mkdir -p /opt/confd/bin && mkdir -p /etc/confd/templates /etc/confd/conf.d
+COPY ./bin/confd-0.13.0-linux-amd64 /opt/confd/bin/confd
 
 # Install selfsigned ca (optional)
 #COPY <ca.crt> /etc/ssl/certs/<ca.pem>

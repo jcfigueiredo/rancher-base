@@ -1,5 +1,6 @@
-set daemon 60
-set logfile /var/log/monit.log
+set daemon 15
+#set logfile /var/log/monit.log
 
-set httpd port 2812 
+set httpd port 2812
+    allow 172.17.0.1
     allow localhost
